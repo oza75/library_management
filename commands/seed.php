@@ -25,7 +25,7 @@ foreach ($data as $datum) {
         $file = sha1(basename($datum['image'])) . '.' . pathinfo($datum['image'], PATHINFO_EXTENSION);
         $fileContent = file_get_contents($datum['image']);
         file_put_contents("public/assets/images/books/$file", $fileContent);
-        $attributes = ['title' => $datum['title'], 'slug' => slugify($datum['title']), 'author' => $datum['author'] ?? '', 'image' => $file ?? '', 'description' => $datum['description'] ?? '', 0];
+        $attributes = ['title' => $datum['title'], 'slug' => slugify($datum['title']), 'author' => $datum['author'] ?? '', 'image' => $file ?? '', 'description' => $datum['description'] ?? ''];
 //        $book = insertIfNotExists('books', ['slug LIKE ?', [slugify($datum['title'])]], $attributes);
         if (select('books', '*', ['slug like ? ', [$attributes['slug']]])) continue;
         $book = insertInto('books', $attributes);
