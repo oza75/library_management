@@ -25,7 +25,7 @@ if (!empty($_POST)) {
         return;
     }
 
-    $user = insertInto('users', ['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'password' => password_hash($password, PASSWORD_ARGON2ID)]);
+    $user = insertInto('users', ['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'password' => password_hash($password, PASSWORD_ARGON2I)]);
     session_set('user', $user);
     session_flash('success', 'Votre compte à été bien créé !');
     redirect($redirect_url ? $redirect_url : '/');

@@ -42,7 +42,7 @@ require_once 'partials/header.php';
                 } ?>
                 <p class="description"><?= $book['description'] ?></p>
                 <div class="actions-container">
-                    <!--                    <a class="btn btn-orange" style="margin-bottom: 20px">Disponible en version PDF</a>-->
+<!--                    <a class="btn btn-orange" style="margin-bottom: 20px">Disponible en version PDF</a>-->
                     <?php if (!$reserved) { ?>
                         <a href="reservation.php?book_id=<?= $book['id'] ?>" class="btn btn-primary"
                            style="text-decoration: none">Réserver <?= $available_at ? "dès qu'il est disponible" : "maintenant" ?></a>
