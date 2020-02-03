@@ -1,3 +1,4 @@
 resources
 .idea
 public/assets/images/books/*
+public/assets/pdf/*
