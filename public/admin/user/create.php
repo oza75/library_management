@@ -28,9 +28,9 @@ if (!empty($_POST)) {
 
 
     $attributes = ['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email];
-    $attributes['password'] = password_hash($password, PASSWORD_ARGON2ID);
-
-    $user = insertInto('users', ['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'password' => password_hash($password, PASSWORD_ARGON2ID)]);
+    $attributes['password'] = password_hash($password, PASSWORD_ARGON2I);
+    //['first_name' => $first_name, 'last_name' => $last_name, 'email' => $email, 'password' => password_hash($password, PASSWORD_ARGON2I)]
+    $user = insertInto('users', $attributes);
     session_flash('success', "Utilisateur crée avec succès !");
 
 }

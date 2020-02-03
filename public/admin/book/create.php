@@ -17,7 +17,7 @@ if (!empty($_POST)) {
         redirect($_SERVER['REQUEST_URI'], ['title' => $title, 'author' => $author, 'description' => $description]);
     }
 
-    if ($pdf && $pdf['error'] == UPLOAD_ERR_NO_FILE || $pdf['error'] !== UPLOAD_ERR_OK) {
+    if ($pdf && ($pdf['error'] == UPLOAD_ERR_NO_FILE || $pdf['error'] !== UPLOAD_ERR_OK)) {
         session_flash('error', "Un problème est survenu lors du téléversement du pdf");
         redirect($_SERVER['REQUEST_URI'], ['title' => $title, 'author' => $author, 'description' => $description]);
     }
