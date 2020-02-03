@@ -74,7 +74,7 @@ require_once 'partials/header.php';
                                       fill="#00B894"/>
                             </svg>
                         </div>
-                        <span>Lisez vos livres directement en ligne !</span>
+                        <span>Vos livres disponibles ou que vous soyez !</span>
                     </li>
                 </ul>
             </div>

@@ -18,7 +18,7 @@ require_once 'partials/header.php';
                 <tbody>
                 <?php
                 admin_component('show-row', ['label' => 'Titre du livre', 'value' => $reservation['b_title']], '/..');
-                admin_component('show-row', ['label' => 'Pour', 'value' => $reservation['u_first_name'] . ' ' . $reservation['u_last_name'] . '(#' . $reservation['u_id'] . ')'], '/..');
+                admin_component('show-row', ['label' => 'Par', 'value' => $reservation['u_first_name'] . ' ' . $reservation['u_last_name'] . '(#' . $reservation['u_id'] . ')'], '/..');
 
                 ?>
                 <tr>

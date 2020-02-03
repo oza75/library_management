@@ -8,7 +8,7 @@ require_once "partials/header.php";
                 <div>
                     <img src="/assets/images/empty-search-state.svg" alt="">
                     <h2>Vous n'avez pas encore réserver un livre</h2>
-                    <button class="btn btn-primary" style="display: inline-block">Réserver un livre</button>
+                    <a href="/search.php" class="btn btn-primary" style="display: inline-block">Réserver un livre</a>
                 </div>
             </div>
         <?php } ?>

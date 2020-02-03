@@ -39,12 +39,12 @@ if (!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST') {
         $attributes['image'] = $name . "." . $extension;
     }
 
-    if ($pdf && ($pdf['error'] == UPLOAD_ERR_NO_FILE || $pdf['error'] !== UPLOAD_ERR_OK)) {
+    if ($pdf && ($pdf['error'] !== UPLOAD_ERR_NO_FILE && $pdf['error'] !== UPLOAD_ERR_OK)) {
         session_flash('error', "Un problème est survenu lors du téléversement du pdf");
         redirect($_SERVER['REQUEST_URI'], ['title' => $title, 'author' => $author, 'description' => $description]);
     }
 
-    if ($pdf) {
+    if ($pdf && $pdf['error'] !== UPLOAD_ERR_NO_FILE) {
         $pdf_tmp_name = $pdf['tmp_name'];
         $pdf_name = sha1(basename($pdf['name']));
         move_uploaded_file($pdf_tmp_name, __DIR__ . "/../../../public/assets/pdf/{$pdf_name}.pdf");

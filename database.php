@@ -151,6 +151,17 @@ if (!function_exists('admin_list_table')) {
         $sort_by = $_GET['sort_by'] ?? null;
         $sort_type = $_GET['sort_type'] ?? null;
         $query = $_GET['query'] ?? null;
+        $action = $_GET['action'] ?? null;
+        if ($action && $action == "delete") {
+            if ($selected = ($_GET['selected'] ?? null)) {
+                $ids = explode(",", $selected);
+                $_ids = array_map(function ($id) {return '?';}, $ids);
+                $_ids = implode(",", $_ids);
+                if(sql_delete("delete from $table where id in ($_ids)", $ids)) {
+//                    session_flash("success", "Les enregistrements selectionnés ont été supprimé");
+                };
+            }
+        }
         $wheres = [];
         $params = [];
         if ($query) {
