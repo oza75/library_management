@@ -2,6 +2,7 @@
 require_once '../session.php';
 require_once '../functions/helpers.php';
 require_once '../database.php';
+
 $limit = 6;
 $topBooks = selectWithPivot("select * from books where id in (select book_id from user_reservations) limit $limit ", [], 'categories', 'book_category_pivot_table', 'book_id', 'category_id');
 if (count($topBooks) < $limit) {
@@ -17,7 +18,8 @@ if (count($topBooks) < $limit) {
         $topBooks = array_merge($topBooks, $r);
     }
 }
-$pdfBooks = selectWithPivot('select * from books order by rand() limit 6', [], 'categories', 'book_category_pivot_table', 'book_id', 'category_id');
+
+$pdfBooks = selectWithPivot('select * from books where pdf IS NOT NULL limit 6', [1], 'categories', 'book_category_pivot_table', 'book_id', 'category_id');
 //var_dump($topBooks);
 //die();
 view('index', ['home' => true, 'topBooks' => $topBooks, 'pdfBooks' => $pdfBooks]);

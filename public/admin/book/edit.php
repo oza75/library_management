@@ -11,11 +11,13 @@ if (empty($id) || $id == null) {
     redirect_to_previous_page();
 }
 
-if (!empty($_POST)) {
+if (!empty($_POST) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = $_POST['title'] ?? null;
     $author = $_POST['author'] ?? null;
     $image = $_FILES['image'] ?? null;
     $description = $_POST['description'] ?? null;
+    $pdf = $_FILES['pdf'] ?? null;
+    $categories_ids = $_POST['category_id'] ?? [];
 
     if ($image['error'] !== UPLOAD_ERR_NO_FILE && $image['error'] !== UPLOAD_ERR_OK) {
         session_flash('error', "Un problème est survenu lors du téléversement de l'image");
@@ -37,12 +39,30 @@ if (!empty($_POST)) {
         $attributes['image'] = $name . "." . $extension;
     }
 
+    if ($pdf && ($pdf['error'] == UPLOAD_ERR_NO_FILE || $pdf['error'] !== UPLOAD_ERR_OK)) {
+        session_flash('error', "Un problème est survenu lors du téléversement du pdf");
+        redirect($_SERVER['REQUEST_URI'], ['title' => $title, 'author' => $author, 'description' => $description]);
+    }
+
+    if ($pdf) {
+        $pdf_tmp_name = $pdf['tmp_name'];
+        $pdf_name = sha1(basename($pdf['name']));
+        move_uploaded_file($pdf_tmp_name, __DIR__ . "/../../../public/assets/pdf/{$pdf_name}.pdf");
+        $attributes['pdf'] = $pdf_name . ".pdf";
+    }
+
     if (updateRow('books', "where id = $id", $attributes)) {
+        sql_delete("delete from book_category_pivot_table where book_id = ? ", [$id]);
+        foreach ($categories_ids as $categories_id) {
+            insertInto('book_category_pivot_table', ['category_id' => $categories_id, 'book_id' => $id]);
+        }
         session_flash('success', "Modification enregistré avec succès !");
     } else {
         session_flash("error", "Erreur lors de la modification du livre !");
     }
 }
-$book = selectWithSql('select * from books where id = ?', [$id]);
+$books = selectWithPivot('select * from books where id = ?', [$id], 'categories', 'book_category_pivot_table', 'book_id', 'category_id');
+$book = $books[0] ?? null;
+$categories = selectWithSql("select * from categories", [], true);
 
-admin_view('edit-book', ['book' => $book], '/..');
+admin_view('edit-book', ['book' => $book, "categories" => $categories], '/..');

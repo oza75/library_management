@@ -354,6 +354,27 @@ template {
   box-sizing: border-box;
 }
 
+:root {
+  --primary: #0F1E92;
+  --secondary: #FF7675;
+  --green: #00b894;
+  --red: #ff3838;
+  --blue: #0984e3;
+  --yellow: #fdcb6e;
+}
+
+::selection {
+  background: var(--primary);
+  /* WebKit/Blink Browsers */
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--primary);
+  /* Gecko Browsers */
+  color: white;
+}
+
 body {
   font-family: "Work Sans", sans-serif;
   font-weight: normal;
@@ -463,6 +484,7 @@ a {
   background-color: #dfe6e9;
   opacity: 0;
   visibility: hidden;
+  min-width: 160px;
   position: absolute;
   left: 0;
   right: 0;
@@ -672,7 +694,7 @@ form .form-group {
   box-shadow: 5px 9px 10px rgba(9, 132, 227, 0.1);
   cursor: pointer;
 }
-.flash-container .flash::after {
+.flash-container .flash.visible::after {
   content: " ";
   position: absolute;
   bottom: -3px;
@@ -682,6 +704,9 @@ form .form-group {
   animation: flashSlider 10s forwards;
   background-color: #299df6;
 }
+.flash-container .flash.visible {
+  animation: slideInLeft 0.5s cubic-bezier(0.66, -0.01, 0.41, 0.99) both;
+}
 .flash-container .flash.flash-success {
   background-color: #00b894;
   color: white;
@@ -689,7 +714,7 @@ form .form-group {
   position: relative;
   box-shadow: 5px 9px 10px rgba(0, 184, 148, 0.1);
 }
-.flash-container .flash.flash-success::after {
+.flash-container .flash.flash-success.visible::after {
   content: " ";
   position: absolute;
   bottom: -3px;
@@ -706,7 +731,7 @@ form .form-group {
   position: relative;
   box-shadow: 5px 9px 10px rgba(253, 203, 110, 0.1);
 }
-.flash-container .flash.flash-warning::after {
+.flash-container .flash.flash-warning.visible::after {
   content: " ";
   position: absolute;
   bottom: -3px;
@@ -723,7 +748,7 @@ form .form-group {
   position: relative;
   box-shadow: 5px 9px 10px rgba(255, 56, 56, 0.1);
 }
-.flash-container .flash.flash-error::after {
+.flash-container .flash.flash-error.visible::after {
   content: " ";
   position: absolute;
   bottom: -3px;
@@ -740,7 +765,7 @@ form .form-group {
   position: relative;
   box-shadow: 5px 9px 10px rgba(9, 132, 227, 0.1);
 }
-.flash-container .flash.flash-info::after {
+.flash-container .flash.flash-info.visible::after {
   content: " ";
   position: absolute;
   bottom: -3px;
@@ -786,6 +811,10 @@ form .form-group {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  text-decoration: none;
+}
+.btn.no-border {
+  border-bottom: none !important;
 }
 .btn.btn-orange {
   background-color: #FF7675;
@@ -814,7 +843,37 @@ form .form-group {
 .btn.btn-danger:hover {
   background-color: #d10000;
 }
+.btn.btn-default {
+  background-color: white;
+  color: black;
+  transition: all 0.3s;
+  border-bottom: 2px solid #b3b3b3;
+}
+.btn.btn-default:hover {
+  background-color: #cccccc;
+}
 
+main {
+  min-height: calc(100vh - 78px);
+  height: 100%;
+}
+
+.footer {
+  padding: 30px 0;
+  background-color: #0F1E92;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(200px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
 .login-page .login-container {
   display: flex;
   justify-content: center;
@@ -955,6 +1014,9 @@ form .form-group {
   border-bottom: none;
   box-shadow: none;
 }
+.edit-page .edit-table tbody td.input-holder img {
+  max-width: 600px;
+}
 .edit-page .edit-table tbody td.label {
   font-size: 16px;
 }
@@ -1032,6 +1094,12 @@ form .form-group {
 .list-table td.actions-column {
   padding: 15px 10px;
   text-align: right;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*# sourceMappingURL=admin.css.map */

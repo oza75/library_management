@@ -18,6 +18,7 @@ create table books
     image       varchar(300) not null,
     author      varchar(255) not null,
     description text,
+    pdf         varchar(255) null,
     created_at  datetime default NOW(),
     constraint books_pk
         primary key (id)
@@ -62,7 +63,7 @@ create table user_reservations
     book_id     bigint,
     created_at  datetime default NOW(),
     return_date date,
-    confirmed boolean default false,
+    confirmed   boolean  default false,
     constraint user_reservations_users_fk
         foreign key (user_id) references users (id)
             on delete cascade,

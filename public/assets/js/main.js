@@ -5,7 +5,7 @@ const selectAll = function (selector, parent) {
 
 const animateWhenVisible = function () {
     const elements = selectAll('.animate-when-visible');
-    const threshold = .1;
+    const threshold = .2;
     const options = {
         root: null,
         rootMargin: '0px',
@@ -31,7 +31,7 @@ const mainTopbar = function () {
         threshold: .1
     };
     const topbar = document.querySelector(".main-topbar");
-    const heroSection = document.querySelector('.home-hero');
+    const heroSection = document.querySelector('.home-hero,.hero-container');
     const observe = function (entries, observer) {
         entries.forEach(function (entry) {
             if (entry.intersectionRatio > .1) {
@@ -68,6 +68,7 @@ const flash = window.flash = function (type, value) {
     flash.classList.add('flash', 'flash-' + type);
     flash.innerHTML = value;
     container.appendChild(flash);
+    flash.classList.add('visible');
     let timer = null;
     flash.addEventListener('dblclick', function () {
         flash.parentNode.removeChild(flash);
@@ -77,8 +78,22 @@ const flash = window.flash = function (type, value) {
         flash.parentNode.removeChild(flash);
     }, 10 * 1000)
 };
+const heroSectionImage = function () {
+    let figures = selectAll('.hero-figure-container figure');
+    if (!figures.length) return;
+    let index = 1;
+    setInterval(function () {
+        let figure = figures[index];
+        if (figure) {
+            figures.forEach(fig => fig.style.opacity = 0);
+            figure.style.opacity = 1;
+        }
+        index = index + 1 > figures.length - 1 ? 0 : index + 1
+    }, 5000)
+};
 document.addEventListener('DOMContentLoaded', function () {
     animateWhenVisible();
     mainTopbar();
     searchPageFormBehavior();
+    heroSectionImage();
 });

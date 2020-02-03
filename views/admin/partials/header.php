@@ -42,7 +42,7 @@ if (!(isset($disable_nav) && $disable_nav)) {
 
         <ul class="sidebar-links-container">
             <li><a href="/admin/users.php" class="sidebar-link">Utilisateurs</a></li>
-            <li><a href="/admin/reservations.php" class="sidebar-link">Réservation</a></li>
+            <li><a href="/admin/reservations.php" class="sidebar-link">Réservations</a></li>
             <li><a href="/admin/books.php" class="sidebar-link">Livres</a></li>
         </ul>
     </div>

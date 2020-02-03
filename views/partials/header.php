@@ -5,10 +5,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="assets/fonts/metropolis/metropolis.css">
     <link rel="stylesheet" href="assets/fonts/work_sans/work_sans.css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/assets/fontawesome/css/all.css">
     <script src="assets/js/main.js"></script>
     <title>
         <?php echo $title ?? 'IGA Book'; ?>
@@ -18,7 +20,7 @@
             <?php
             foreach (session_get('flash', []) as $flash) {
             ?>
-            flash('<?= $flash['type']?>', '<?= $flash['value']?>');
+            flash("<?= $flash['type']?>", "<?= $flash['value']?>");
             <?php
             }
             ?>
@@ -39,20 +41,25 @@ if (!(isset($disable_nav) && $disable_nav)) {
             <span class="logo-name">IGA BOOKs</span>
         </a>
         <ul class="topbar-links">
-            <li class="topbar-link active">
+            <li class="topbar-link <?= $_SERVER['PHP_SELF'] == '/index.php' ? 'active' : ''?>">
                 <a href="/">Accueil</a>
             </li>
-            <li class="topbar-link">
-                <a href="">
+            <li class="topbar-link <?= $_SERVER['PHP_SELF'] == '/discover.php' ? 'active' : ''?>">
+                <a href="/discover.php">
                     Découvrir
                 </a>
             </li>
             <?php if ($user = session_get('user', false)) { ?>
                 <li class="dropdown">
-                    <a class="topbar-link btn btn-primary"
+                    <a class="topbar-link btn btn-primary no-border"
                        style="margin-right: 0"><?= $user['first_name'] . ' ' . $user['last_name'] ?></a>
                     <div class="dropdown-content">
                         <ul>
+                            <li>
+                                <a class="dropdown-link" href="my-books.php">
+                                    Mes Livres
+                                </a>
+                            </li>
                             <li>
                                 <a class="dropdown-link" href="logout.php">
                                     Déconnexion
@@ -62,7 +69,7 @@ if (!(isset($disable_nav) && $disable_nav)) {
                     </div>
                 </li>
             <?php } else { ?>
-                <li class="topbar-link btn btn-primary">
+                <li class="topbar-link btn btn-primary no-border">
                     <a href="/login.php">Connexion</a>
                 </li>
             <?php } ?>

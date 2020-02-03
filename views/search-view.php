@@ -29,19 +29,32 @@ require_once 'partials/header.php';
             </section>
         </div>
         <section class="result-container">
-            <div class="container-1 book-grid">
+            <?php if (!empty($books)) { ?>
+                <div class="container-1 book-grid">
+                    <?php
+                    foreach ($books as $book) {
+                        component('book', [
+                            'title' => $book['title'],
+                            'author' => $book['author'],
+                            'categories' => $book['categories'],
+                            "slug" => $book['slug'],
+                            "image" => imageUrl('/books/' . $book['image'])
+                        ]);
+                    }
+                    ?>
+                </div>
                 <?php
-                foreach ($books as $book) {
-                    component('book', [
-                        'title' => $book['title'],
-                        'author' => $book['author'],
-                        'categories' => $book['categories'],
-                        "slug" => $book['slug'],
-                        "image" => imageUrl('/books/' . $book['image'])
-                    ]);
-                }
-                ?>
-            </div>
+            } else { ?>
+                <div class="container-1">
+                    <div class="empty-books">
+                        <div>
+                            <img src="/assets/images/empty-search-state.svg" alt="">
+                            <h2>Aucun livre ne correspond à vos critères de recherche</h2>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            } ?>
         </section>
         <?php if ($totalPage > 1) { ?>
             <section class="container-1 pagination-section">

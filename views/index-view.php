@@ -1,44 +1,48 @@
 <?php
 require_once 'partials/header.php';
-$books = [
-    [
-        'title' => 'Thief River Falls',
-        'author' => 'Marine Chevalier',
-        'categories' => ['Faune'],
-        "image" => "https://images.unsplash.com/photo-1578944032637-f09897c5233d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-    ]
-];
+$searchPlaceholderBooks = selectWithSql("select title from books where char_length (title) < 20 order by rand() limit 3", [], true);
+$searchPlaceholder = "&quot;" . implode("&quot;, &quot;", array_map(function ($item) {
+        return $item['title'];
+    }, $searchPlaceholderBooks)) . "&quot;";
 ?>
     <main>
-        <!--        <section class="hero">-->
-        <!--            <div class="hero-wrapper">-->
-        <!--                <div class="hero-text-wrapper ">-->
-        <!--                    <h1 class="hero-title">-->
-        <!--                        Réserver votre livre en un seul clic !-->
-        <!--                    </h1>-->
-        <!--                    <p class="hero-description">-->
-        <!--                        <span class="quote">-->
-        <!--                            “ Lire, c'est aller à la rencontre d'une chose qui va exister mais dont personne ne sait encore-->
-        <!--                        ce qu'elle sera. “-->
-        <!--                        </span>-->
-        <!--                        <strong>Italo Calvino</strong>-->
-        <!--                    </p>-->
-        <!--                    <div class="inputs-container">-->
-        <!--                        <input type="text" class="form-input" placeholder="Rechercher votre livre...">-->
-        <!--                        <button class="btn btn-primary">Se connecter</button>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--                <div class="hero-image animate-when-visible">-->
-        <!--                    <img src="assets/images/hero-image-2.png" alt="">-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </section>-->
         <section class="home-hero">
+            <div class="hero-figure-container">
+                <figure class="hero-figure" style="opacity: 1">
+                    <div class="hero-figure__image"
+                         style="background: black url(/assets/images/hero-section-image.jpg) no-repeat center /cover;"></div>
+                </figure>
+                <figure class="hero-figure">
+                    <div class="hero-figure__image"
+                         style="background: black url(/assets/images/hero-section-5.jpg) no-repeat center /cover;"></div>
+                </figure>
+                <figure class="hero-figure">
+                    <div class="hero-figure__image"
+                         style="background: black url(/assets/images/hero-section-10.jpg) no-repeat center /cover;"></div>
+                </figure>
+                <figure class="hero-figure">
+                    <div class="hero-figure__image"
+                         style="background: black url(/assets/images/hero-section-1.jpg) no-repeat center /cover;"></div>
+                </figure>
+
+                <figure class="hero-figure">
+                    <div class="hero-figure__image"
+                         style="background: black url(/assets/images/hero-section-4.jpg) no-repeat center /cover;"></div>
+                </figure>
+            </div>
             <div class="overlay">
                 <div class="wrapper">
-                    <h1 class="title">IGA BOOKS</h1>
-                    <p class="description">Réserver et retrouver vos livres en un seul clic !</p>
-                    <a href="search.php" class="btn btn-primary call-to-action">Réserver votre livre</a>
+                    <h1 class="title">Retrouver et réserver vos livres <br> en un seul clic !</h1>
+                    <form action="search.php" method="get">
+                        <div class="home-input-wrapper">
+                            <div class="home-search-form">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="home-input" autocomplete="off" name="search"
+                                       placeholder="Essayer : <?= $searchPlaceholder ?>">
+                            </div>
+                            <button class="btn btn-primary home-search-button" type="submit">Rechercher</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -77,7 +81,7 @@ $books = [
                         Plus bésoin de vous déplacer pour venir prendre un livre, réserver votre livre depuis chez vous
                         et venez le recuperer dès qu’il sera disponible.
                     </p>
-                    <button class="btn btn-primary">Réserver votre livre</button>
+                    <a href="/search.php" class="btn btn-primary">Réserver votre livre</a>
                 </div>
                 <div>
                     <img src="assets/images/reservation-pub-image.png" alt="">
